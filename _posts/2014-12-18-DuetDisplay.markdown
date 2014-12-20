@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Inside DuetDisplay"
+title:  "Inside DuetDisplay and Unattributed Open-Source"
 date:   2014-12-18 13:12:43
 categories: re
 ---
