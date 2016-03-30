@@ -14,18 +14,29 @@ MathJax.Hub.Config({
 });
 </script>
 
+* TOC
+{:toc}
 
 Introduction
 ============
 
-There exists a lot of material covering arclength of Bézier curves, since it is a
-common requirement in stroke dashing, animation, etc.  The arclength integral
-doesn't have a closed form solution, so there has been a lot of work devoted to
-different ways of computations and approximations.
+There exists a lot of material covering the arc length of Bézier curves, since
+it is a common requirement in stroke dashing, animation, etc.  The arc length
+integral for a cubic Bézier, for example, doesn't have a closed form solution,
+so there has been many pieces of writing devoted to different computations and
+approximations.
 
 There exists much less information, however, about the calculation of the area
 of a Bézier curve.  At first it might seem like it would be more complicated
 than the arclength, but as we'll see it actually has a very simple closed form
+solution.
+
+There has been previously published derivations for the area of cubic Bézier
+curves, and quadratic Bézier curves and lines are of course a subset of those
+curves.
+
+I have not found a derivation of the area of rational quadratic Bézier curves
+(conic sections) however, and this article additionally attempts to derive a
 solution.
 
 
@@ -131,3 +142,64 @@ We have of course arrived at the
 specifically the form:
 
 <div> $$ \mathbf{A} = {1 \over 2} \Big | \sum_{i=1}^{n} x_iy_{i+1}-x_{i+1}y_i \Big | $$ </div>
+
+
+Rational Quadratic Bézier Curves
+================================
+
+Rational quadratic Bézier curves, also sometimes referred to as conic sections,
+add an additional weight parameter to expand the representable curves to
+include [ellipses and hyperbolas]({% post_url 2015-01-15-QuadraticCurves %}).
+
+Moving from a polynomial to a rational function makes the integral much more
+involved.
+
+![Area of Rational Quadratic Bézier Segment]({{ site.url }}/images/CurveArea-bez-conic-1.svg)
+
+The result of the integral has some conditions attached, the graph above shows
+that the result isn't valid when $$ w < -1 $$.  There are some singularities
+at $$ \pm 1 $$, this corresponds to when the curve [is a parabola]({% post_url 2015-01-15-QuadraticCurves %}).  Anyway when $$ w = 1 $$ the curve is equivalent to a non-rational
+quadratic Bézier, so it is a case we already have a solution for.
+
+We can break the problem into three ranges:
+
+![Valid ranges of w]({{ site.url }}/images/CurveArea-bez-conic-3.svg)
+
+Although it would be nice to support negative weights, most graphics systems
+limit weights to being positive.  As stated by Ron Goldman: "Negative weights,
+however, may introduce singularities even if we restrict the parameter domain,
+so negative weights are generally avoided."
+
+Additionally there are some problems directly implementing the above equation,
+as some of the subexpressions are complex.  We can manually rearrange the
+expression so the subexpressions are all real on $$ 0 < w < 1 $$:
+
+![Conic equation rearranged for 0<w<1]({{ site.url }}/images/CurveArea-bez-conic-2.svg)
+
+We still have another difficulty in terms of implementation.  As w approaches 1,
+the denominator will go towards zero and thus the fraction will approach infinity.
+However we know the answer should be approaching that of a non-rational
+quadratic Bézier as we approach 1.  In order to implement this stably we need
+to better understand the asymptotic behaviour.  The key here is to understand
+the <a href="https://en.wikipedia.org/wiki/Inverse_trigonometric_functions#Infinite_series">
+series expansion of arctan</a>.
+
+![Conic equation arctan behaviour]({{ site.url }}/images/CurveArea-bez-conic-5.svg)
+
+As w approaches 1 the argument of arctan approaches 0, and as x approaches 0
+arctan(x) approaches x.  We can use an approximation based on a truncated
+series expansion to cancel out the denominator and produce a stable rational
+expression for use when w is near 1.
+
+![Conic equation using arctan expansion]({{ site.url }}/images/CurveArea-bez-conic-6.svg)
+
+Similarly we can rewrite the equation in terms of the inverse hyperbolic tangent
+so that all subexpressions will be real for $$ w > 1 $$.
+
+![Conic equation rearranged for w>1]({{ site.url }}/images/CurveArea-bez-conic-4.svg)
+
+<!--
+<div> $$
+\frac{1}{2 \sqrt{1-w^2} \left(1-w^2\right)} \left(2 \tan ^{-1}\left(\frac{\sqrt{w-1}}{\sqrt{-w-1}}\right) (-w \text{x0} \text{y2}+w \text{x2} \text{y0}+\text{x0} \text{y1}+\text{x1} (\text{y2}-\text{y0})-\text{x2} \text{y1})-\sqrt{1-w^2} (w (\text{x0} \text{y1}-\text{x1} \text{y0}+\text{x1} \text{y2}-\text{x2} \text{y1})-\text{x0} \text{y2}+\text{x2} \text{y0})\right)
+ $$ </div>
+ -->
