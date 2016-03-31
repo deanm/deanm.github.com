@@ -69,7 +69,7 @@ We can choose whichever form of the line integral is most convenient, they
 should all simplify to the same result (more on that later).  Taking the first
 form and writing it in terms of a typical parametric of t from 0 to 1:
 
-<div> $$ \int_{0}^{1} y(t) \, x'(t) \,dt $$ </div>
+<div> $$ \int_{0}^{1} x(t) \, y'(t) \,dt $$ </div>
 
 For closed piecewise curves (closed paths with multiple segments), the area is
 simply the sum of the area of the segments (keeping consistent orientation of
