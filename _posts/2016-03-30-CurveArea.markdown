@@ -5,7 +5,7 @@ date:   2016-03-30 14:00:00
 categories: graphics
 ---
 
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
 <script>
 MathJax.Hub.Config({
     jax: ["input/TeX","output/HTML-CSS"],
