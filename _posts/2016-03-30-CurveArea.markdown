@@ -5,6 +5,7 @@ date:   2016-03-30 14:00:00
 categories: graphics
 ---
 
+<link rel="canonical" href="https://ich.deanmcnamee.com/graphics/2016/03/30/CurveArea.html" />
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
 <script>
 MathJax.Hub.Config({
