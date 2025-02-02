@@ -5,6 +5,8 @@ date:   2014-12-18 13:12:43
 categories: re
 ---
 
+<link rel="canonical" href="https://ich.deanmcnamee.com/re/2014/12/18/DuetDisplay.html" />
+
 I read about Duet a few days before its release.  There were some interesting
 claims being suggested &mdash; "ex-Apple engineer" is able to run a display over the
 lightning connector, with zero latency.  The marketing made it sound like this
