@@ -5,6 +5,7 @@ date:   2015-01-15 14:00:00
 categories: graphics
 ---
 
+<link rel="canonical" href="https://ich.deanmcnamee.com/graphics/2015/01/15/QuadraticCurves.html" />
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js"></script>
 <script>
 MathJax.Hub.Config({
